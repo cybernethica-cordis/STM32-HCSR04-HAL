@@ -61,9 +61,9 @@ This project implements an ultrasonic distance measurement system using the HC-S
     
 - **Echo Detection & Timeout**: Wait for the rising edge on ECHO with a timeout to avoid blocking
     
-- **Pulse Measurement**: Record pulse start and end times (accounting for timer overflow).
+- **Pulse Measurement**: Record pulse start and end times (accounting for timer overflow)
     
-- **Validation**: Discard pulses shorter than 100 µs or longer than 25000 µs.
+- **Validation**: Discard pulses shorter than 100 µs or longer than 25000 µs
     
 - **Distance Calculation**:
     
@@ -71,9 +71,9 @@ This project implements an ultrasonic distance measurement system using the HC-S
     distance = (pulse_width * sound_speed * calibration_factor) / 2.0;
     ```
     
-- **Averaging**: Use a static 3-sample buffer to compute a moving average.
+- **Averaging**: Use a static 3-sample buffer to compute a moving average
     
-- **Output**: Transmit the result over UART.
+- **Output**: Transmit the result over UART
     
 
 ### Realisation
