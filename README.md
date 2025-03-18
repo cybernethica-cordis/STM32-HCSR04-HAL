@@ -14,15 +14,15 @@ This project implements an ultrasonic distance measurement system using the HC-S
 
 ## Key Features
 
-- **Hardware:** Direct interfacing with HC-SR04 using 5V tolerant pins (PB8 – ECHO, PB9 – TRIG)
+- **Hardware**: Direct interfacing with HC-SR04 using 5V tolerant pins (PB8 — ECHO, PB9 — TRIG)
     
-- **Timing:** TIM2 configured at 1 µs resolution
+- **Timing**: TIM2 configured at 1 µs resolution
     
-- **Compensation & Filtering:** Temperature-based sound speed calculation and 3-sample averaging
+- **Compensation & Filtering**: Temperature-based sound speed calculation and 3-sample averaging
     
-- **Robustness:** Pulse width validation (100–25000 µs, or ~1.7–425 cm) with hardware timeouts
+- **Robustness**: Pulse width validation (100–25000 µs, or ~1.7–425 cm) with hardware timeouts
     
-- **Debug Output:** UART2 at 115200 baud for diagnostic messages (to Linux host via Minicom)
+- **Debug Output**: UART2 at 115200 baud for diagnostic messages (to Linux host via Minicom)
     
 
 ## Hardware Connections
@@ -36,15 +36,17 @@ This project implements an ultrasonic distance measurement system using the HC-S
 
 ## Development Setup
 
-1.  **STM32CubeMX Settings**
+- **Clock**: HSI 16 MHz → SYSCLK 16 MHz
     
-    - Clock: HSI 16 MHz → SYSCLK 16 MHz
-    - TIM2: Internal clock, Prescaler=15 (1 µs resolution)
-    - USART2: 115200 baud, 8N1
-    - GPIO:
-        - PB9: Push-pull output (TRIG)
-        - PB8: Floating input (ECHO)
-2.  **Compiler Flags**
+- **TIM2**: Internal clock, Prescaler=15 (1 µs resolution)
+    
+- **USART2**: 115200 baud, 8N1
+    
+- **GPIO**:
+    
+    - **PB9**: Push-pull output (TRIG)
+    - **PB8**: Floating input (ECHO)
+- **Compiler Flag**:
     
     ```bash
     -u _printf_float  # Enable floating-point support in printf
@@ -53,25 +55,25 @@ This project implements an ultrasonic distance measurement system using the HC-S
 
 ## Measurement Algorithm
 
-### Overview
+### **Overview**
 
-- **Trigger Generation:** Set TRIG LOW for stabilization (4 µs), then HIGH for 10 µs, and back to LOW
+- **Trigger Generation**: Set TRIG LOW for stabilization (4 µs), then HIGH for 10 µs, and back to LOW
     
-- **Echo Detection & Timeout:** Wait for the rising edge on ECHO with a timeout to avoid blocking
+- **Echo Detection & Timeout**: Wait for the rising edge on ECHO with a timeout to avoid blocking
     
-- **Pulse Measurement:** Record pulse start and end times (accounting for timer overflow).
+- **Pulse Measurement**: Record pulse start and end times (accounting for timer overflow).
     
-- **Validation:** Discard pulses shorter than 100 µs or longer than 25000 µs.
+- **Validation**: Discard pulses shorter than 100 µs or longer than 25000 µs.
     
-- **Distance Calculation:**
+- **Distance Calculation**:
     
     ```C
     distance = (pulse_width * sound_speed * calibration_factor) / 2.0;
     ```
     
-- **Averaging:** Use a static 3-sample buffer to compute a moving average.
+- **Averaging**: Use a static 3-sample buffer to compute a moving average.
     
-- **Output:** Transmit the result over UART.
+- **Output**: Transmit the result over UART.
     
 
 ### Realisation
@@ -185,9 +187,35 @@ Invalid pulse        # Out-of-range measurement
 
 ## Build & Deployment
 
-1.  Generate code from STM32CubeMX
-2.  Build the project using STM32CubeIDE
-3.  Flash the firmware via STM32CubeProgrammer
+- Generate code from **STM32CubeMX**
+- Build the project using **STM32CubeIDE**
+- Flash the firmware via **STM32CubeProgrammer**
+
+## Pre-built Binaries
+
+- **HCSR04-UART-HAL.elf**: Firmware file in ELF format (for debugging and development)
+- **HCSR04-UART-HAL.bin**: Firmware file in binary format (for flashing onto the MCU)
+
+## Checksums
+
+- **HCSR04-UART-HAL.elf**: `f9b950dd1d6cd54f41f8bb25eae6cf492fc0faf51f0e445a234141d0c680f81c`
+- **HCSR04-UART-HAL.bin**: `08924f3c5479d4a6d00dd415fa0d301d67dd09f6d61f4fddd2fd9069bd846cc6`
+
+> To check the integrity of the downloaded binaries, run the following command in your terminal:
+
+```bash
+sha256sum HCSR04-UART-HAL.elf  
+sha256sum HCSR04-UART-HAL.bin
+```
+
+> Alternatively, you can use the following command to directly check the checksums:
+
+```bash
+echo "f9b950dd1d6cd54f41f8bb25eae6cf492fc0faf51f0e445a234141d0c680f81c HCSR04-UART-HAL.elf" | sha256sum --check  
+echo "08924f3c5479d4a6d00dd415fa0d301d67dd09f6d61f4fddd2fd9069bd846cc6 HCSR04-UART-HAL.bin" | sha256sum --check
+```
+
+> **Note**: If the output does not match the provided checksums, do not proceed with flashing the firmware, as the file may have been corrupted during download. In such a case, re-download the file and check the checksum again.
 
 ## Calibration & Optimization
 
@@ -201,10 +229,10 @@ Invalid pulse        # Out-of-range measurement
 
 ## References
 
-1.  [STM32 Nucleo Boards Documentation](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/documentation.html)
+- [STM32 Nucleo Boards Documentation](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/documentation.html)
     
-2.  [STM32F446RE Documentation](https://www.st.com/en/microcontrollers-microprocessors/stm32f446re.html#documentation)
+- [STM32F446RE Documentation](https://www.st.com/en/microcontrollers-microprocessors/stm32f446re.html#documentation)
+
+- [HC-SR04 Product Features](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf)
     
-3.  [HC-SR04 Product Features](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf)
-    
-4.  [STM32CubeIDE User Guide](https://www.st.com/resource/en/user_manual/dm00629856-stm32cubeide-user-guide-stmicroelectronics.pdf)
+- [STM32CubeIDE User Guide](https://www.st.com/resource/en/user_manual/dm00629856-stm32cubeide-user-guide-stmicroelectronics.pdf)
