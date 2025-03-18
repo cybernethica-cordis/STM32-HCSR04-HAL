@@ -6,7 +6,7 @@
 
 ## Подключение HC-SR04 к STM32 и передача данных по UART
 
-![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg) ![GitHub release](https://img.shields.io/github/v/release/cybernethica-cordis/STM32-HCSR04-HAL)
 
 В этом документе рассмотрим, как подключить ультразвуковой датчик *HC-SR04* к микроконтроллеру *STM32*, обработать полученные данные и передать их на компьютер по *UART*. В качестве примера используется отладочная плата *STM32F446RET6 (LQFP64) Nucleo* и утилита *Minicom* в среде *Linux*.
 

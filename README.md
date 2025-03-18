@@ -4,11 +4,11 @@
 
 ### Ultrasonic distance measurement with temperature compensation, 3-sample moving average, and UART output
 
-![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg) ![GitHub release](https://img.shields.io/github/v/release/cybernethica-cordis/STM32-HCSR04-HAL)
 
 ## Overview
 
-This project implements an ultrasonic distance measurement system using the HC-SR04 sensor and an STM32F446RE Nucleo-64 board. It features temperature-adjusted sound speed, a 3-sample moving average for stable readings, pulse width filtering to reject invalid measurements, timeout handling for lost signals, and diagnostic output via UART.
+This project implements an ultrasonic distance measurement system using the HC-SR04 sensor and an STM32F446RE Nucleo-64 board. It features temperature-compensated sound speed, a 3-sample moving average for stable readings, pulse width filtering to reject invalid measurements, timeout handling for lost signals, and diagnostic output via UART.
 
 > Step-by-step Russian guide available at: [guideRU.md](https://github.com/cybernethica-cordis/STM32-HCSR04-HAL/blob/main/guideRU.md).
 
@@ -76,7 +76,7 @@ This project implements an ultrasonic distance measurement system using the HC-S
 - **Output**: Transmit the result over UART
     
 
-### Realisation
+### Implementation
 
 > **Note**: All necessary variables (e.g., `timeout`, `pulse_start`, `pulse_end`, `pulse_width`, `sound_speed`, `calibration_factor`, `uart_buffer`) were declared earlier. The `sound_speed` variable is computed based on the ambient temperature for accurate compensation.
 
