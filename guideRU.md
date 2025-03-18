@@ -62,7 +62,7 @@
 
 Обозначим схему подключения следующим образом:
 
-![Freehand Drawing.svg](inserted_images/01.png)
+![Freehand Drawing.svg](IMG/01.png)
 
 Иначе говоря:
 
@@ -75,7 +75,7 @@
 
 Подключение может выглядеть, например, так:
 
-![Freehand Drawing.svg](inserted_images/02.jpg)
+![Freehand Drawing.svg](IMG/02.jpg)
 
 ### Почему PB9 (D14) и PB8 (D15) имеют по два обозначения?
 
@@ -83,7 +83,7 @@
 
 Посмотрим на схему в разделе «Hardware layout and configuration → Extension connectors» в *STM32 Nucleo-64 boards User Manual*:
 
-![Freehand Drawing.svg](inserted_images/03.png)
+![Freehand Drawing.svg](IMG/03.png)
 
 Справа вверху видим, что рядом с контактами *D15 (PB8)* и *D14 (PB9)* находятся ячейки с номерами 10 и 9, окрашенные в лиловый цвет. *Что означают все эти обозначения?*
 
@@ -98,7 +98,7 @@
 
 Посмотрим в таблицу соответствий между наименованиями контактов *ARDUINO®* и *STM32* в технической документации *STM32 Nucleo-64 boards User Manual* → «Hardware layout and configuration» → «ARDUINO® connectors»:
 
-![Freehand Drawing.svg](inserted_images/04.png)
+![Freehand Drawing.svg](IMG/04.png)
 
 Видим, что:
 
@@ -107,11 +107,11 @@
 
 Просто для понимания — мы находимся здесь:
 
-![Freehand Drawing.svg](inserted_images/05.jpg)
+![Freehand Drawing.svg](IMG/05.jpg)
 
 А также здесь:
 
-![Freehand Drawing.svg](inserted_images/06.jpg)
+![Freehand Drawing.svg](IMG/06.jpg)
 
 Можно заметить, что выбор контактов (разъемов) все еще происходит так, будто *заранее известно*, что *PB8* и *PB9* годятся для решения задачи. Если ненадолго остановиться на этом «заранее известном», можно наконец прояснить логику выбора и ответить на вопрос: «Как же все-таки *самостоятельно* определить нужный контакт?»
 
@@ -169,7 +169,7 @@
 - Укажем имя нового проекта и нажмем *Finish*;
 - Согласимся на открытие *Device Configuration Tool* — перспективы *STM32CubeMX*.
 
-![Freehand Drawing.svg](inserted_images/07.png)
+![Freehand Drawing.svg](IMG/07.png)
 
 Слева видим поле настроек. Настраиваем:
 
@@ -188,7 +188,7 @@
 - *PB8* мы определили для *ECHO* — с точки зрения микроконтроллера это вход, тогда *PB8 > GPIO_Input*;
 - *PB9* мы определили для *TRIG* — с точки зрения микроконтроллера это выход, тогда *PB9 > GPIO_Output*.
 
-![Freehand Drawing.svg](inserted_images/08.png)
+![Freehand Drawing.svg](IMG/08.png)
 
 Сохраним конфигурацию проекта: *Ctrl+S* либо *Project > Generate Code*. Согласимся на генерацию кода и перейдем в перспективу *C/C++* (окно файла *main.c*).
 
@@ -198,7 +198,7 @@
 
 Прежде всего добавим флаг `-u _printf_float`: *Project > Properties > C/C++ Build > Settings > MCU/MPU Settings > Use float with printf from newlib-nano (-u \_printf_float) > Apply*.
 
-![Freehand Drawing.svg](inserted_images/09.png)
+![Freehand Drawing.svg](IMG/09.png)
 
 Эта настройка автоматически добавит флаг `-u _printf_float` в параметры компилятора, который укажет редактору связей (линковщику, *linker*) использовать поддержку чисел с плавающей точкой в функции `printf`. По умолчанию библиотека `newlib-nano`, которая используется в *STM32*, не поддерживает вывод чисел с плавающей точкой в `printf()` в целях экономии памяти. Флаг `-u _printf_float` включает поддержку типа `float` для функции `printf()`.
 
@@ -574,7 +574,7 @@ void assert_failed(uint8_t *file, uint32_t line) {
 
 Представим в виде блок-схемы:
 
-![Freehand Drawing.svg](inserted_images/09-2.png)
+![Freehand Drawing.svg](IMG/09-2.png)
 
 ### Сборка проекта
 
@@ -582,7 +582,7 @@ void assert_failed(uint8_t *file, uint32_t line) {
 
 Соберем проект: *Project > Build Project*. В консоли увидим вывод сообщения об успешном и безошибочном окончании сборки.
 
-![Freehand Drawing.svg](inserted_images/10.png)
+![Freehand Drawing.svg](IMG/10.png)
 
 *\* Этап отладки опустим.*
 
@@ -594,7 +594,7 @@ void assert_failed(uint8_t *file, uint32_t line) {
 - Введем в терминал *Linux* команду `minicom -s`, чтобы вызвать режим конфигурации *Minicom*.
 - Увидим меню.
 
-![Freehand Drawing.svg](inserted_images/11.png)
+![Freehand Drawing.svg](IMG/11.png)
 
 Нас интересует: *Настройка последовательного порта > A*. Вместо указанного по умолчанию имени последовательного порта введем то, которое узнали, использовав `sudo dmesg | grep tty`. Синтаксис следующий: `A — Последовательный порт: /dev/ttyACM0`. Затем *Enter > Enter > Выход* (из меню конфигурации, но не из *Minicom*).
 
@@ -606,11 +606,11 @@ void assert_failed(uint8_t *file, uint32_t line) {
 
 В основном окне *STM32CubeProgrammer* выберем *ST-Link*, нажмем *Connect*.
 
-![Freehand Drawing.svg](inserted_images/12.png)
+![Freehand Drawing.svg](IMG/12.png)
 
 После подключения увидим отображение адресного пространства, обновление логов и информацию о подключенном устройстве. В левой панели вверху найдем изображение, которое ведет в меню *Erasing & Programming*.
 
-![Freehand Drawing.svg](inserted_images/13.png)
+![Freehand Drawing.svg](IMG/13.png)
 
 В меню *Erasing & Programming* будем загружать в память микроконтроллера исполняемый двоичный файл в формате `.elf` (*Executable and Linkable Format*), который появился в результате сборки проекта.
 
@@ -618,7 +618,7 @@ void assert_failed(uint8_t *file, uint32_t line) {
 
 Закроем окна с сообщениями об успешной прошивке и перейдем в окно терминала, где работает *Minicom*.
 
-![Freehand Drawing.svg](inserted_images/14.png)
+![Freehand Drawing.svg](IMG/14.png)
 
 ### Послесловие и калибровка
 
